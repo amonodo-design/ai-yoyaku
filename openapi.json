@@ -1,0 +1,90 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AI予約API",
+    "description": "美容院・整体・ジムなどの予約をAI秘書から行うためのAPI",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://ai-yoyaku.vercel.app"
+    }
+  ],
+  "paths": {
+    "/availability": {
+      "get": {
+        "operationId": "getAvailability",
+        "summary": "空き確認",
+        "description": "指定したエリア・ジャンル・日付の空き枠を返す",
+        "parameters": [
+          {"name": "date", "in": "query", "required": true, "schema": {"type": "string"}, "description": "日付（例：2026-03-23）"},
+          {"name": "genre", "in": "query", "required": false, "schema": {"type": "string"}, "description": "ジャンル（例：整体、ヨガ、ジム）"},
+          {"name": "area", "in": "query", "required": false, "schema": {"type": "string"}, "description": "エリア（例：渋谷、新宿）"}
+        ],
+        "responses": {
+          "200": {
+            "description": "空き枠一覧",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "shop_name": {"type": "string"},
+                      "available_times": {"type": "array", "items": {"type": "string"}},
+                      "address": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservation": {
+      "post": {
+        "operationId": "createReservation",
+        "summary": "予約登録",
+        "description": "指定した店舗・日時・氏名・電話番号で予約を登録する",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["shop_name", "datetime", "customer_name", "customer_phone"],
+                "properties": {
+                  "shop_name": {"type": "string", "description": "店舗名"},
+                  "datetime": {"type": "string", "description": "予約日時（例：2026-03-23 14:00）"},
+                  "customer_name": {"type": "string", "description": "氏名"},
+                  "customer_phone": {"type": "string", "description": "電話番号"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "予約完了",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string"},
+                    "message": {"type": "string"}
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "店舗が見つからない、または空き枠なし"
+          }
+        }
+      }
+    }
+  }
+}
