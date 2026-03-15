@@ -1,0 +1,26 @@
+[
+  {
+    "id": "shop_001",
+    "name": "渋谷整体サロンA",
+    "genre": "整体",
+    "area": "渋谷",
+    "address": "東京都渋谷区道玄坂1-1-1",
+    "calendar_id": "primary"
+  },
+  {
+    "id": "shop_002",
+    "name": "新宿ヨガスタジオB",
+    "genre": "ヨガ",
+    "area": "新宿",
+    "address": "東京都新宿区西新宿2-2-2",
+    "calendar_id": "primary"
+  },
+  {
+    "id": "shop_003",
+    "name": "渋谷パーソナルジムC",
+    "genre": "ジム",
+    "area": "渋谷",
+    "address": "東京都渋谷区神南3-3-3",
+    "calendar_id": "primary"
+  }
+]
